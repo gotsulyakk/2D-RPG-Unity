@@ -28,10 +28,10 @@ public class SkeletonBattleState : EnemyState
         {
             if (enemySkeleton.IsPlayerDetected().distance < enemySkeleton.attackDistance)
             {
-                // stateMachine.ChangeState(enemySkeleton.attackState);
-                Debug.Log("Attack");
-                enemySkeleton.ZeroVelocity();
-                return;
+                if (CanAttack())
+                {
+                    stateMachine.ChangeState(enemySkeleton.attackState);
+                }
             }
         }
 
@@ -50,5 +50,15 @@ public class SkeletonBattleState : EnemyState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    private bool CanAttack()
+    {
+        if (Time.time >= enemySkeleton.lastTimeAttacked + enemySkeleton.attackCooldown)
+        {
+            enemySkeleton.lastTimeAttacked = Time.time;
+            return true;
+        }
+        return false;
     }
 }

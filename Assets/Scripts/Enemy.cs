@@ -12,6 +12,8 @@ public class Enemy : Entity
 
     [Header("Attack Info")]
     public float attackDistance;
+    public float attackCooldown;
+    [HideInInspector] public float lastTimeAttacked;
 
     public EnemyStateMachine stateMachine { get; private set; }
 
@@ -44,5 +46,10 @@ public class Enemy : Entity
         base.OnDrawGizmos();
 
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDirection, transform.position.y));
+    }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        stateMachine.currentState.AnimationFinishTrigger();
     }
 }
