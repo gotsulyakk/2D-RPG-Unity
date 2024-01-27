@@ -26,12 +26,21 @@ public class SkeletonBattleState : EnemyState
 
         if (enemySkeleton.IsPlayerDetected())
         {
+            stateTimer = enemySkeleton.battleTime;
+
             if (enemySkeleton.IsPlayerDetected().distance < enemySkeleton.attackDistance)
             {
                 if (CanAttack())
                 {
                     stateMachine.ChangeState(enemySkeleton.attackState);
                 }
+            }
+        }
+        else
+        {  
+            if (stateTimer < 0 || Vector2.Distance(player.transform.position, enemySkeleton.transform.position) > enemySkeleton.battleAggroDistance)  // If the player is out of range or the battle time is over, go back to idle state
+            {
+                stateMachine.ChangeState(enemySkeleton.idleState);
             }
         }
 
