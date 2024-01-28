@@ -33,7 +33,16 @@ public class EnemySkeleton : Enemy
     protected override void Update()
     {
         base.Update();
+    }
 
-        // stateMachine.currentState.Update();
+    public override bool CanBeStunned()
+    {
+        if (base.CanBeStunned())
+        {
+            stateMachine.ChangeState(stunnedState);
+            return true;
+        }
+        
+        return false;
     }
 }

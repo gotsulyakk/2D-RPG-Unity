@@ -17,6 +17,11 @@ public class PlayerGroundedState : PlayerState  // Superstate
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            stateMachine.ChangeState(player.counterAttackState);
+        }
+
         if (Input.GetKeyDown(KeyCode.J))
         {
             stateMachine.ChangeState(player.primaryAttackState);
