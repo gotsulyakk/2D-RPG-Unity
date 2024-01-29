@@ -14,8 +14,8 @@ public class Player : Entity
     public float jumpForce = 10f;
 
     [Header("Dash Info")]
-    [SerializeField] private float dashCooldown = 1f;
-    private float dashCooldownTimer;
+    // [SerializeField] private float dashCooldown = 1f;
+    // private float dashCooldownTimer;
     public float dashForce = 20f;
     public float dashTime = 0.2f;
     public float dashDirection { get; private set;}
@@ -39,6 +39,8 @@ public class Player : Entity
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
     # endregion
 
+    public SkillManager skillManager { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -61,6 +63,7 @@ public class Player : Entity
     {
         base.Start();
 
+        skillManager = SkillManager.instance;
         stateMachine.Initialize(idleState);
     }
 
@@ -92,11 +95,8 @@ public class Player : Entity
             return;
         }
 
-        dashCooldownTimer -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer < 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dashSkill.CanUseSkill())
         {
-            dashCooldownTimer = dashCooldown;
             dashDirection = Input.GetAxisRaw("Horizontal");
 
             if (dashDirection == 0)

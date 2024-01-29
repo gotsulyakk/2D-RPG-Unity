@@ -13,6 +13,8 @@ public class PlayerDashState : PlayerState
         base.Enter();
 
         stateTimer = player.dashTime;
+
+        player.skillManager.cloneSkill.SpawnClone(player.transform);  // I actually don't like this skill, but I'm keeping it for now for educational purposes  
     }
 
     public override void Update()
