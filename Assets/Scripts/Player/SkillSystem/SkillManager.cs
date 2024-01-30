@@ -28,5 +28,4 @@ public class SkillManager : MonoBehaviour
         cloneSkill = GetComponent<CloneSkill>();
         swordSkill = GetComponent<SwordSkill>();
     }
-    
 }
