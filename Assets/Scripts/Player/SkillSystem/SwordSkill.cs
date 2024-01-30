@@ -2,8 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: In Bouncing sword first attack is with different force than the rest of the bounces
+public enum SwordType
+{
+    Normal,
+    Bouncing,
+    Piercing,
+    Spinning
+}
+
 public class SwordSkill : Skill
 {
+    public SwordType swordType = SwordType.Normal;
+
+    [Header("Bouncing sword info")]
+    [SerializeField] private float bounceGravity;
+    [SerializeField] private int maxBounces;
+
     [Header("Skill info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 throwingForce;
@@ -47,6 +62,12 @@ public class SwordSkill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController swordController = newSword.GetComponent<SwordSkillController>();
 
+        if (swordType == SwordType.Bouncing)
+        {
+            swordGravity = bounceGravity;
+            swordController.SetupBouncingSword(true, maxBounces);
+        }
+
         swordController.ThrowSword(finalDirection, swordGravity, player);
 
         player.AssignNewSword(newSword);
@@ -54,6 +75,7 @@ public class SwordSkill : Skill
         AimDotsActive(false);
     }
 
+    #region Aiming
     public Vector2 AimDirection()
     {
         Vector2 playerPosition = player.transform.position;
@@ -90,4 +112,5 @@ public class SwordSkill : Skill
         
         return position;
     }
+    #endregion
 }
