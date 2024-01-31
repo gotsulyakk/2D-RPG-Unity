@@ -303,6 +303,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  defaultMoveSpeed: 0
   moveSpeed: 1.5
   idleTime: 2
   battleTime: 5
@@ -1111,6 +1112,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  defaultMoveSpeed: 0
   moveSpeed: 1.5
   idleTime: 2
   battleTime: 5
@@ -6221,9 +6223,18 @@ MonoBehaviour:
   swordType: 1
   bounceGravity: 4.5
   maxBounces: 4
+  bounceForce: 20
+  piercingGravity: 1
+  maxPierces: 3
+  hitCooldown: 0.35
+  maxTravelDistance: 5
+  spinDuration: 2
+  spinGravity: 1
   swordPrefab: {fileID: 2472605329932093637, guid: de1f4cbf9d84c41f8af4a47fbb22df1a, type: 3}
   throwingForce: {x: 35, y: 25}
   swordGravity: 4.5
+  freezeTimeDuration: 0.5
+  returnSpeed: 15
   aimDotPrefab: {fileID: 5161568437176052477, guid: 5383d8e37afd244bd86d07debdebff64, type: 3}
   aimDotParent: {fileID: 305823055}
   numberOfDots: 20

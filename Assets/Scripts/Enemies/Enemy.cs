@@ -7,6 +7,7 @@ public class Enemy : Entity
     [SerializeField] protected LayerMask whatIsPlayer;
 
     [Header("Move Info")]
+    public float defaultMoveSpeed;
     public float moveSpeed;
     public float idleTime;
     
@@ -32,6 +33,8 @@ public class Enemy : Entity
         base.Awake();
 
         stateMachine = new EnemyStateMachine();
+
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Start()
@@ -44,8 +47,30 @@ public class Enemy : Entity
         base.Update();
 
         stateMachine.currentState.Update();
+    } 
+
+    public virtual void TimeFreezer(bool _timeFrozen)
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0;
+            anim.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            anim.speed = 1;
+        }
     }
 
+    protected IEnumerator FreezeTimeFor(float _seconds)
+    {
+        TimeFreezer(true);
+        yield return new WaitForSeconds(_seconds);
+        TimeFreezer(false);
+    }
+
+    #region Counter Attack
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -66,7 +91,8 @@ public class Enemy : Entity
             return true;
         }
         return false;
-    }  
+    }
+    #endregion
 
     public virtual RaycastHit2D IsPlayerDetected()
     {
